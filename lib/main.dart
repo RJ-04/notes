@@ -46,6 +46,9 @@ class HomePage extends StatelessWidget {
           LoadingScreen().hide();
         }
       },
+
+      // go router
+
       builder: (context, state) {
         if (state is AuthStateSignedIn) {
           return const NotesView();
