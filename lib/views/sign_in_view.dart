@@ -51,71 +51,86 @@ class _SignInState extends State<SignIn> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              TextField(
-                controller: _email,
-                autocorrect: false,
-                enableSuggestions: false,
-                autofillHints: null,
-                keyboardType: TextInputType.emailAddress,
-                autofocus: true,
-                decoration: const InputDecoration(
-                    hintText: " Email (Jane1975@gmail.com)"),
-              ),
-              TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autofillHints: null,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                      hintText: " Password (doe_001#JD)")),
+              Flexible(flex: 10, child: Container()),
               Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        final email = _email.text;
-                        final password = _password.text;
-                        context
-                            .read<AuthBloc>()
-                            .add(AuthEventSignIn(email, password));
-                      },
-                      child: const Text("\n\nSign In"),
-                    ),
-                  ],
+                child: SizedBox(
+                  width: 300,
+                  height: 400,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        maxLines: 2,
+                        controller: _email,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        autofillHints: null,
+                        keyboardType: TextInputType.emailAddress,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                            hintText: " Email (Jane1975@gmail.com)"),
+                      ),
+                      TextField(
+                          maxLines: 1,
+                          controller: _password,
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autofillHints: null,
+                          autocorrect: false,
+                          decoration: const InputDecoration(
+                              hintText: " Password (doe_001#JD)")),
+                      Center(
+                        child: Column(
+                          children: [
+                            TextButton(
+                              onPressed: () async {
+                                final email = _email.text;
+                                final password = _password.text;
+                                context
+                                    .read<AuthBloc>()
+                                    .add(AuthEventSignIn(email, password));
+                              },
+                              child: const Text("\n\nSign In"),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: Column(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(const AuthEventForgotPassword(null));
+                              },
+                              child: const Text("\n\nForgot password ?"),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Center(
+                        child: Column(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(const AuthEventShouldSignUp());
+                              },
+                              child: const Text(
+                                  "\n\n(Don't have a Account? ) Sign Up"),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-              Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEventForgotPassword(null));
-                      },
-                      child: const Text("\n\nForgot password ?"),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        context
-                            .read<AuthBloc>()
-                            .add(const AuthEventShouldSignUp());
-                      },
-                      child: const Text("\n\n(Don't have a Account? ) Sign Up"),
-                    ),
-                  ],
-                ),
-              )
+              Flexible(flex: 10, child: Container()),
             ],
           ),
         ),

@@ -7,7 +7,7 @@ Future<bool> shouldDeleteDialog(BuildContext context) {
     title: "Delete",
     content: "Are you sure you wish to delete this note?",
     optionBuilder: () => {
-      "Cancel": false,
+      "Cancel\n\n": false,
       "delete": true,
     },
   ).then((value) => value ?? false);

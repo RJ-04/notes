@@ -62,34 +62,41 @@ class _NotesViewState extends State<NotesView> {
           )
         ],
       ),
-      body: StreamBuilder(
-        stream: _notesService.allNotes(ownerUserId: userId),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-            case ConnectionState.active:
-              if (snapshot.hasData) {
-                final allNotes = snapshot.data as Iterable<CloudNote>;
-                return NotesListView(
-                  notes: allNotes,
-                  onDeleteNote: (note) async {
-                    await _notesService.deleteNote(documentId: note.documentId);
-                  },
-                  onTap: (note) {
-                    Navigator.of(context).pushNamed(
-                      createOrUpdateNoteRoute,
-                      arguments: note,
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Center(
+          child: StreamBuilder(
+            stream: _notesService.allNotes(ownerUserId: userId),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  if (snapshot.hasData) {
+                    final allNotes = snapshot.data as Iterable<CloudNote>;
+                    return NotesListView(
+                      notes: allNotes,
+                      onDeleteNote: (note) async {
+                        await _notesService.deleteNote(
+                            documentId: note.documentId);
+                      },
+                      onTap: (note) {
+                        Navigator.of(context).pushNamed(
+                          createOrUpdateNoteRoute,
+                          arguments: note,
+                        );
+                      },
                     );
-                  },
-                );
-              } else {
-                return const Center(
-                    child: CircularProgressIndicator.adaptive());
+                  } else {
+                    return const Center(
+                        child: CircularProgressIndicator.adaptive());
+                  }
+                default:
+                  return const Center(
+                      child: CircularProgressIndicator.adaptive());
               }
-            default:
-              return const Center(child: CircularProgressIndicator.adaptive());
-          }
-        },
+            },
+          ),
+        ),
       ),
     );
   }

@@ -27,7 +27,8 @@ class EmailVerification extends StatelessWidget {
                         .read<AuthBloc>()
                         .add(const AuthEventSendEmailVerification());
                   },
-                  child: const Center(child: Text("Send Email Verification")),
+                  child:
+                      const Center(child: Text("\n\nSend Email Verification")),
                 ),
               ],
             ),
@@ -39,7 +40,7 @@ class EmailVerification extends StatelessWidget {
                     onPressed: () async {
                       context.read<AuthBloc>().add(const AuthEventSignOut());
                     },
-                    child: const Text("Restart")),
+                    child: const Text("\n\nRestart")),
               ],
             ),
           )

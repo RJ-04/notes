@@ -4,7 +4,6 @@ import 'package:share_plus/share_plus.dart';
 import '../../services/auth/auth_service.dart';
 import 'package:project/services/cloud/cloud_note.dart';
 import 'package:project/services/cloud/firebase_cloud_storage.dart';
-
 import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';
 
 class CreateUpdateNoteView extends StatefulWidget {
@@ -104,24 +103,28 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
               icon: const Icon(Icons.share))
         ],
       ),
-      body: FutureBuilder(
-        future: createOrGetExistingNote(context),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              _setupTextControllerListener();
-              return TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Start typing your note...',
-                ),
-              );
-            default:
-              return const Center(child: CircularProgressIndicator.adaptive());
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: FutureBuilder(
+          future: createOrGetExistingNote(context),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                _setupTextControllerListener();
+                return TextField(
+                  controller: _textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: 'Start typing your note...',
+                  ),
+                );
+              default:
+                return const Center(
+                    child: CircularProgressIndicator.adaptive());
+            }
+          },
+        ),
       ),
     );
   }
